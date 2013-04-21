@@ -548,7 +548,7 @@ public class TileQuarry extends TileEntity implements IPowerReceptor, IPipeConne
         this.cacheItems.addAll(getDroppedItems(coord[0], coord[1], coord[2]));
         this.worldObj.playAuxSFXAtEntity(null, 2001, coord[0], coord[1], coord[2],
                 this.worldObj.getBlockId(coord[0], coord[1], coord[2]) + (this.worldObj.getBlockMetadata(coord[0], coord[1], coord[2]) << 12));
-        this.worldObj.setBlockToAir(coord[0], coord[1], coord[2]);
+        this.worldObj.setBlock(coord[0], coord[1], coord[2], 0);
         checkDropItem(coord);
         return true;
     }
@@ -616,7 +616,7 @@ public class TileQuarry extends TileEntity implements IPowerReceptor, IPipeConne
                 EntityItem entity = (EntityItem) result.get(ii);
                 if (entity.isDead)
                     continue;
-                ItemStack drop = entity.getEntityItem();
+                ItemStack drop = entity.func_92014_d();
                 if (drop.stackSize <= 0)
                     continue;
                 CoreProxy.proxy.removeEntity(entity);
@@ -813,7 +813,7 @@ public class TileQuarry extends TileEntity implements IPowerReceptor, IPipeConne
 
     private void setBreakableFrame(int x, int y, int z) {
         if (this.worldObj.getBlockId(x, y, z) == frameBlock.blockID) {
-            this.worldObj.setBlockMetadataWithNotify(x, y, z, 1, 3);
+            this.worldObj.setBlockMetadataWithNotify(x, y, z, 1);
         }
     }
 
@@ -1099,7 +1099,7 @@ public class TileQuarry extends TileEntity implements IPowerReceptor, IPipeConne
     }
 
     @Override
-    public int powerRequest(ForgeDirection from) {
+    public int powerRequest() {
         return (int) Math.ceil(Math.min(getPowerProvider().getMaxEnergyReceived(), getPowerProvider().getMaxEnergyStored()
                 - getPowerProvider().getEnergyStored()));
     }

@@ -9,26 +9,23 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 
 public class BlockQuarry extends BlockContainer {
-    Icon textureTop;
-    Icon textureFront;
 
     public BlockQuarry(int i) {
-        super(i, Material.iron);
+        super(i, 4, Material.iron);
         setHardness(1.5F);
         setResistance(10F);
         setStepSound(soundStoneFootstep);
         setCreativeTab(CreativeTabBuildCraft.tabBuildCraft);
-        setUnlocalizedName("QuarryPlus");
+        setBlockName("QuarryPlus");
+        setTextureFile("/mods/yogpstop/quarryplus/textures/blocks/chunk.png");
     }
 
     private final ArrayList<ItemStack> drop = new ArrayList<ItemStack>();
@@ -57,27 +54,20 @@ public class BlockQuarry extends BlockContainer {
     }
 
     @Override
-    public Icon getBlockTextureFromSideAndMetadata(int i, int j) {
+    @SideOnly(Side.CLIENT)
+    public int getBlockTextureFromSideAndMetadata(int i, int j) {
         if (j == 0 && i == 3)
-            return this.textureFront;
+            return 5;
 
         if (i == j)
-            return this.textureFront;
+            return 5;
 
         switch (i) {
         case 1:
-            return this.textureTop;
+            return 6;
         default:
-            return this.blockIcon;
+            return this.blockIndexInTexture;
         }
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister par1IconRegister) {
-        this.blockIcon = par1IconRegister.registerIcon("yogpstop/quarryplus:quarry");
-        this.textureTop = par1IconRegister.registerIcon("yogpstop/quarryplus:quarry_top");
-        this.textureFront = par1IconRegister.registerIcon("yogpstop/quarryplus:quarry_front");
     }
 
     @Override
@@ -86,9 +76,10 @@ public class BlockQuarry extends BlockContainer {
     }
 
     @Override
-    public void onBlockPlacedBy(World w, int x, int y, int z, EntityLiving el, ItemStack stack) {
+    public void onBlockPlacedBy(World w, int x, int y, int z, EntityLiving el) {
+        ItemStack stack = el.getHeldItem();
         ForgeDirection orientation = get2dOrientation(el.posX, el.posZ, x, z);
-        w.setBlockMetadataWithNotify(x, y, z, orientation.getOpposite().ordinal(), 1);
+        w.setBlockMetadataWithNotify(x, y, z, orientation.getOpposite().ordinal());
         ((TileQuarry) w.getBlockTileEntity(x, y, z)).init(stack.getEnchantmentTagList());
     }
 

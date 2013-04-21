@@ -43,7 +43,7 @@ public class GuiQuarry extends GuiContainer {
     @Override
     protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.renderEngine.bindTexture("/org/yogpstop/qp/quarry.png");
+        this.mc.renderEngine.bindTexture(this.mc.renderEngine.getTexture("/org/yogpstop/qp/quarry.png"));
         int l = this.width - this.xSize >> 1;
         int i1 = this.height - this.ySize >> 1;
         drawTexturedModalRect(l, i1, 0, 0, this.xSize, this.ySize);
@@ -61,13 +61,13 @@ public class GuiQuarry extends GuiContainer {
         int half = (this.xSize - (offset << 2)) >> 1;
         int full = (this.xSize - (offset << 1));
 
-        this.buttonList.add(new GuiButton(TileQuarry.openFortuneGui, i + offset, j + 46, half, 20, translateToLocal("gui.fortuneList")));
-        this.buttonList.add(new GuiButton(TileQuarry.openSilktouchGui, i2 + offset, j + 46, half, 20, translateToLocal("gui.silktouchList")));
-        this.buttonList.add(this.a3 = new GuiButton(TileQuarry.tBuildAdvFrame, i + offset, j + 71, half, 20, ""));
-        this.buttonList.add(this.a4 = new GuiButton(TileQuarry.tRemoveWater, i2 + offset, j + 71, half, 20, ""));
-        this.buttonList.add(this.a5 = new GuiButton(TileQuarry.tRemoveLava, i + offset, j + 96, half, 20, ""));
-        this.buttonList.add(this.a6 = new GuiButton(TileQuarry.tRemoveLiquid, i2 + offset, j + 96, half, 20, ""));
-        this.buttonList.add(new GuiButton(TileQuarry.reinit, i + offset, j + 121, full, 20, translateToLocal("gui.quarryReset")));
+        this.controlList.add(new GuiButton(TileQuarry.openFortuneGui, i + offset, j + 46, half, 20, translateToLocal("gui.fortuneList")));
+        this.controlList.add(new GuiButton(TileQuarry.openSilktouchGui, i2 + offset, j + 46, half, 20, translateToLocal("gui.silktouchList")));
+        this.controlList.add(this.a3 = new GuiButton(TileQuarry.tBuildAdvFrame, i + offset, j + 71, half, 20, ""));
+        this.controlList.add(this.a4 = new GuiButton(TileQuarry.tRemoveWater, i2 + offset, j + 71, half, 20, ""));
+        this.controlList.add(this.a5 = new GuiButton(TileQuarry.tRemoveLava, i + offset, j + 96, half, 20, ""));
+        this.controlList.add(this.a6 = new GuiButton(TileQuarry.tRemoveLiquid, i2 + offset, j + 96, half, 20, ""));
+        this.controlList.add(new GuiButton(TileQuarry.reinit, i + offset, j + 121, full, 20, translateToLocal("gui.quarryReset")));
         setNames();
     }
 

@@ -13,7 +13,6 @@ import buildcraft.core.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -25,11 +24,12 @@ import net.minecraft.world.World;
 public class BlockMarker extends BlockContainer {
 
     public BlockMarker(int i) {
-        super(i, Material.circuits);
+        super(i, 0, Material.circuits);
 
         setLightValue(0.5F);
         setCreativeTab(CreativeTabBuildCraft.tabBuildCraft);
-        setUnlocalizedName("MarkerPlus");
+        setBlockName("MarkerPlus");
+        setTextureFile("/mods/yogpstop/quarryplus/textures/blocks/chunk.png");
     }
 
     @Override
@@ -181,17 +181,17 @@ public class BlockMarker extends BlockContainer {
         super.onBlockAdded(world, i, j, k);
 
         if (BuildersProxy.canPlaceTorch(world, i - 1, j, k)) {
-            world.setBlockMetadataWithNotify(i, j, k, 1, 1);
+            world.setBlockMetadataWithNotify(i, j, k, 1);
         } else if (BuildersProxy.canPlaceTorch(world, i + 1, j, k)) {
-            world.setBlockMetadataWithNotify(i, j, k, 2, 1);
+            world.setBlockMetadataWithNotify(i, j, k, 2);
         } else if (BuildersProxy.canPlaceTorch(world, i, j, k - 1)) {
-            world.setBlockMetadataWithNotify(i, j, k, 3, 1);
+            world.setBlockMetadataWithNotify(i, j, k, 3);
         } else if (BuildersProxy.canPlaceTorch(world, i, j, k + 1)) {
-            world.setBlockMetadataWithNotify(i, j, k, 4, 1);
+            world.setBlockMetadataWithNotify(i, j, k, 4);
         } else if (BuildersProxy.canPlaceTorch(world, i, j - 1, k)) {
-            world.setBlockMetadataWithNotify(i, j, k, 5, 1);
+            world.setBlockMetadataWithNotify(i, j, k, 5);
         } else if (BuildersProxy.canPlaceTorch(world, i, j + 1, k)) {
-            world.setBlockMetadataWithNotify(i, j, k, 0, 1);
+            world.setBlockMetadataWithNotify(i, j, k, 0);
         }
 
         dropTorchIfCantStay(world, i, j, k);
@@ -209,11 +209,5 @@ public class BlockMarker extends BlockContainer {
     @Override
     public void addCreativeItems(ArrayList itemList) {
         itemList.add(new ItemStack(this));
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister par1IconRegister) {
-        this.blockIcon = par1IconRegister.registerIcon("yogpstop/quarryplus:marker");
     }
 }
