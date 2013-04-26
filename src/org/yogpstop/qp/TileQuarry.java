@@ -594,7 +594,7 @@ public class TileQuarry extends TileEntity implements IPowerReceptor, IPipeConne
         return null;
     }
 
-    private static final String createStackedBlock = "func_71880_c_";
+    private static final String createStackedBlock = "f_";
 
     private static Method getMethodRepeating(Class cls) {
         Method cache = null;
