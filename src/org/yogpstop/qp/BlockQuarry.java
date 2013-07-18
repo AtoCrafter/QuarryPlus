@@ -116,7 +116,7 @@ public class BlockQuarry extends BlockContainer {
 		super.onBlockPlacedBy(w, x, y, z, el, stack);
 		ForgeDirection orientation = get2dOrientation(el.posX, el.posZ, x, z);
 		w.setBlockMetadataWithNotify(x, y, z, orientation.getOpposite().ordinal(), 1);
-		((TileQuarry) w.getBlockTileEntity(x, y, z)).G_init(stack.getEnchantmentTagList());
+		((TileQuarry) w.getBlockTileEntity(x, y, z)).G_init(stack.getEnchantmentTagList(), (TileQuarry.CE_BB + TileQuarry.CE_MF + TileQuarry.CE_MH) / 3);
 	}
 
 	private static ForgeDirection get2dOrientation(double x1, double z1, double x2, double z2) {

@@ -25,6 +25,11 @@ public class TileMiningWell extends TileBasic {
 	public static double CF;
 	public static double CS;
 
+	public TileMiningWell() {
+		super();
+		S_initPowerProvider(CE);
+	}
+
 	boolean G_isWorking() {
 		return this.working;
 	}
@@ -75,13 +80,14 @@ public class TileMiningWell extends TileBasic {
 	}
 
 	private boolean S_breakBlock(int depth) {
-		return S_breakBlock(this.xCoord, depth, this.zCoord, BP, CE, CS, CF);
+		return S_breakBlock(this.xCoord, depth, this.zCoord, BP, 1, CS, CF);
 	}
 
 	@Override
 	public void readFromNBT(NBTTagCompound nbttc) {
 		super.readFromNBT(nbttc);
 		this.working = nbttc.getBoolean("working");
+		S_initPowerProvider(CE);
 	}
 
 	@Override

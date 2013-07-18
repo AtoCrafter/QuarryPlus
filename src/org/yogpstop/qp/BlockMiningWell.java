@@ -75,7 +75,7 @@ public class BlockMiningWell extends BlockContainer {
 		super.onBlockPlacedBy(w, x, y, z, el, stack);
 		ForgeDirection orientation = get2dOrientation(el.posX, el.posZ, x, z);
 		w.setBlockMetadataWithNotify(x, y, z, orientation.getOpposite().ordinal(), 1);
-		((TileMiningWell) w.getBlockTileEntity(x, y, z)).G_init(stack.getEnchantmentTagList());
+		((TileMiningWell) w.getBlockTileEntity(x, y, z)).G_init(stack.getEnchantmentTagList(), TileMiningWell.CE);
 	}
 
 	private static ForgeDirection get2dOrientation(double x1, double z1, double x2, double z2) {

@@ -45,6 +45,11 @@ public class TileQuarry extends TileBasic {
 	static double CF;
 	static double CS;
 
+	public TileQuarry() {
+		super();
+		S_initPowerProvider((CE_BB + CE_MF + CE_MH) / 3);
+	}
+
 	private void S_updateEntity() {
 		switch (this.now) {
 		case MAKEFRAME:
@@ -233,7 +238,7 @@ public class TileQuarry extends TileBasic {
 
 	private boolean S_makeFrame() {
 		this.digged = true;
-		float power = (float) Math.max(BP_MF / Math.pow(CE_MF, this.efficiency), 0D);
+		float power = (float) Math.max(BP_MF / Math.pow(1, this.efficiency), 0D);
 		if (this.pp.useEnergy(power, power, true) != power) return false;
 		this.worldObj.setBlock(this.targetX, this.targetY, this.targetZ, frameBlock.blockID);
 		S_setNextTarget();
@@ -242,7 +247,7 @@ public class TileQuarry extends TileBasic {
 
 	private boolean S_breakBlock() {
 		this.digged = true;
-		if (S_breakBlock(this.targetX, this.targetY, this.targetZ, BP_BB, CE_BB, CS, CF)) {
+		if (S_breakBlock(this.targetX, this.targetY, this.targetZ, BP_BB, 1, CS, CF)) {
 			S_checkDropItem();
 			if (this.now == BREAKBLOCK) this.now = MOVEHEAD;
 			S_setNextTarget();
@@ -365,10 +370,9 @@ public class TileQuarry extends TileBasic {
 		double z = this.targetZ - this.headPosZ;
 		double distance = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2));
 		float pw = (float) Math.max(
-				Math.min(2D + Math.pow(CE_MH, this.efficiency) * this.pp.getEnergyStored() / 500D,
-						((distance - 0.1D) * BP_MH / Math.pow(CE_MH, this.efficiency))), 0D);
+				Math.min(2D + Math.pow(1, this.efficiency) * this.pp.getEnergyStored() / 500D, ((distance - 0.1D) * BP_MH / Math.pow(1, this.efficiency))), 0D);
 		float used = this.pp.useEnergy(pw, pw, true);
-		double blocks = used * Math.pow(CE_MH, this.efficiency) / BP_MH + 0.1D;
+		double blocks = used * Math.pow(1, this.efficiency) / BP_MH + 0.1D;
 
 		if (blocks * 2 > distance) {
 			this.headPosX = this.targetX;
@@ -415,10 +419,10 @@ public class TileQuarry extends TileBasic {
 	}
 
 	@Override
-	void G_init(NBTTagList nbttl) {
+	void G_init(NBTTagList nbttl, double CE) {
 		S_createBox();
 		requestTicket();
-		super.G_init(nbttl);
+		super.G_init(nbttl, CE);
 	}
 
 	private Ticket chunkTicket;
@@ -484,6 +488,7 @@ public class TileQuarry extends TileBasic {
 		this.headPosY = nbttc.getDouble("headPosY");
 		this.headPosZ = nbttc.getDouble("headPosZ");
 		this.initialized = false;
+		S_initPowerProvider((CE_BB + CE_MF + CE_MH) / 3);
 	}
 
 	@Override

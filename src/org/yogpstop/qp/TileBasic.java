@@ -49,11 +49,6 @@ public abstract class TileBasic extends APacketTile implements IPowerReceptor, I
 
 	protected List<ItemStack> cacheItems = new LinkedList<ItemStack>();
 
-	public TileBasic() {
-		super();
-		S_initPowerProvider();
-	}
-
 	@Override
 	protected void S_recievePacket(byte pattern, ByteArrayDataInput data, EntityPlayer ep) {
 		switch (pattern) {
@@ -132,7 +127,7 @@ public abstract class TileBasic extends APacketTile implements IPowerReceptor, I
 		}
 	}
 
-	void G_init(NBTTagList nbttl) {
+	void G_init(NBTTagList nbttl, double CE) {
 		if (nbttl != null) for (int i = 0; i < nbttl.tagCount(); i++) {
 			short id = ((NBTTagCompound) nbttl.tagAt(i)).getShort("id");
 			short lvl = ((NBTTagCompound) nbttl.tagAt(i)).getShort("lvl");
@@ -140,6 +135,7 @@ public abstract class TileBasic extends APacketTile implements IPowerReceptor, I
 			if (id == 35) this.fortune = (byte) lvl;
 			if (id == 32) this.efficiency = (byte) lvl;
 		}
+		if (!this.worldObj.isRemote) S_initPowerProvider(CE);
 		G_reinit();
 	}
 
@@ -274,9 +270,9 @@ public abstract class TileBasic extends APacketTile implements IPowerReceptor, I
 				- getPowerProvider().getEnergyStored()));
 	}
 
-	protected void S_initPowerProvider() {
+	protected void S_initPowerProvider(double CE) {
 		this.pp = PowerFramework.currentFramework.createPowerProvider();
-		this.pp.configure(0, 0, 100, 0, 30000);
+		this.pp.configure(0, 0, (int) (25 * Math.pow(CE, this.efficiency)), 0, (int) (15000 * Math.pow(CE, this.efficiency)));
 	}
 
 	private static Method aTRI;

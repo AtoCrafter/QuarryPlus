@@ -343,7 +343,7 @@ public class TilePump extends APacketTile implements ITankContainer {
 			}
 		}
 		this.currentHeight++;
-		float p = (float) (block_count * BP_R / Math.pow(CE_R, this.efficiency) + frame_count * BP_F / Math.pow(CE_F, this.efficiency));
+		float p = (float) (block_count * BP_R / Math.pow(1, this.efficiency) + frame_count * BP_F / Math.pow(1, this.efficiency));
 		if (pp.useEnergy(p, p, true) == p) {
 			for (Long key : cacheLiquids.keySet()) {
 				if (!this.liquids.containsKey(key)) this.liquids.put(key, new InfVolatLiquidTank(
