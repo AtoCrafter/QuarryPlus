@@ -272,7 +272,7 @@ public abstract class TileBasic extends APacketTile implements IPowerReceptor, I
 
 	protected void S_initPowerProvider(double CE) {
 		this.pp = PowerFramework.currentFramework.createPowerProvider();
-		this.pp.configure(0, 0, (int) (25 * Math.pow(CE, this.efficiency)), 0, (int) (15000 * Math.pow(CE, this.efficiency)));
+		this.pp.configure(0, 0, (int) (6 * Math.pow(CE, this.efficiency)), 0, (int) (15000 * Math.pow(CE, this.efficiency)));
 	}
 
 	private static Method aTRI;
