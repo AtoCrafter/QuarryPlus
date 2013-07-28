@@ -4,6 +4,7 @@ import org.yogpstop.qp.PacketHandler;
 import org.yogpstop.qp.QuarryPlus;
 import org.yogpstop.qp.TileBasic;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
@@ -47,6 +48,7 @@ public class GuiManual extends GuiScreen {
 			int metaid;
 			try {
 				bid = Short.parseShort(this.blockid.getText());
+                if (bid < 0 || Block.blocksList.length <= bid) throw new IndexOutOfBoundsException("invalid BlockID");
 			} catch (Exception e) {
 				this.blockid.setText(StatCollector.translateToLocal("tof.error"));
 				return;
@@ -54,6 +56,7 @@ public class GuiManual extends GuiScreen {
 			try {
 				if (this.meta.getText().equals("")) metaid = 0;
 				else metaid = Integer.parseInt(this.meta.getText());
+                if (metaid < 0 || 16 <= metaid) throw new IndexOutOfBoundsException("invalid Metadata");
 			} catch (Exception e) {
 				this.meta.setText(StatCollector.translateToLocal("tof.error"));
 				return;
